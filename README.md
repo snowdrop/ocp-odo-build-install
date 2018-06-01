@@ -30,6 +30,8 @@
   odo create openjdk18 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
   
+  **REMARK** : Deployment of the pod will fail as a missing ENV var is not defined to specify the uberjar file to be used !!
+  
 - Cleanup
   ```bash
   oc delete all --all
