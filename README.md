@@ -40,7 +40,7 @@
  
 - During the execution of the `odo create openjdk18` command, the following resources will be created:
   - buildconfig, is, deploymentConfig, service, route
-- A s2i build will take place using as source the following GIT repo `https://github.com/kadel/bootstrap-supervisored-s2i` 
+- A s2i build will take place
 - Next, the code source is pushed as binary stream and a build is started to generate the SpringBoot docker image
   
 
