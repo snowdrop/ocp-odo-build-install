@@ -1,0 +1,24 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: openjdk18
+  namespace: openshift
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations:
+        description: >-
+          Build and run Java Microservices such as Spring Noot
+        iconClass: icon-spring
+        openshift.io/display-name: OpenJDK 1.8 (Latest)
+        openshift.io/provider-display-name: 'Red Hat, Inc.'
+        tags: 'builder,java,spring-boot'
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+      generation: 1
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
