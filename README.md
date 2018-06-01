@@ -24,23 +24,23 @@
   oc create -f is-openjdk18.yaml
   ``` 
 
-- Create new spring-boot-http component (= create a new application + BuildConfig)
+- Create new spring-boot-http component (= create a new application, BuildConfig, DeploymentConfig, Service)
 
   ```bash
-  odo create openjdk18
+  odo create openjdk18 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
-
-- Push the source code as binary stream
-
+  
+- Cleanup
   ```bash
-  odo push
-  ```
+  oc delete all --all
+  oc delete pvc/openjdk18-s2idata
+  ```  
   
 **Steps**
  
-- During the execution of the `odo create openjdk18` command, the following resources will be created:
+- During the execution of the `odo create openjdk18 --git` command, the following resources will be created:
   - buildconfig, is, deploymentConfig, service, route
-- A s2i build will take place
-- Next, the code source is pushed as binary stream and a build is started to generate the SpringBoot docker image
-  
+- A s2i build will take place using as input source the GIT repo passed as parameter
+- When the build is finished, then a docker image of the Spring Boot application is deployed as ImageStream
+- The DeploymentConfig is then triggered and a pod of the application will be created
 
