@@ -24,13 +24,13 @@
   oc create -f is-openjdk18.yaml
   ``` 
 
-- Create new spring-boot-http component (= create a new application, BuildConfig, DeploymentConfig, Service)
+- Create new spring-boot-http component (= create a new application, DeploymentConfig, Service)
 
   ```bash
   odo create openjdk18 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
-  
-  **REMARK** : Deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not defined to specify the uberjar file to be used !!
+  **REMARK** : 
+  - Deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not defined to specify the uberjar file to be used !!
   
 - Cleanup
   ```bash
@@ -41,8 +41,9 @@
 **Steps**
  
 - During the execution of the `odo create openjdk18 --git` command, the following resources will be created:
-  - buildconfig, is, deploymentConfig, service, route
-- A s2i build will take place using as input source the GIT repo passed as parameter
-- When the build is finished, then a docker image of the Spring Boot application is deployed as ImageStream
-- The DeploymentConfig is then triggered and a pod of the application will be created
+  - is, deploymentConfig, service, route
+- Next A pod will be created, a supervisord added to be able to call the service requesting to compile and next to restart the microservice (= java -jar)
+- The code is git cloned (or pushed), then the s2i script resposnible to do the mvn compilation will take place.
+- When the compilation is finished, then the script `assemble-and-restart` is called by the supervisord
+- The microservices is (re)started
 
