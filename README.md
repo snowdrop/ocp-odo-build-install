@@ -28,7 +28,7 @@
  
 - Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command : 
   ```bash
-  oc create -f is-all-openjdk18.yaml
+  oc create -f is-openjdk18.yaml
   ```
   
   **REMARK** : If you try to install the official image using the command `oc import-image` then the annotation tag's builder needed by odo is removed !
