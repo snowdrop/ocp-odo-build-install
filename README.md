@@ -3,7 +3,7 @@
 - [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
 
   ```bash
-  sudo curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.6/odo-darwin-amd64 -o /usr/local/bin/odo && chmod +x /usr/local/bin/odo
+  sudo sh -c 'curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.6/odo-darwin-amd64.gz | gzip -d > /usr/local/bin/odo; chmod +x /usr/local/bin/odo'
   ```
   
   **Remark** : Alternative approach is to compile the project if `go` is installed on your machine
