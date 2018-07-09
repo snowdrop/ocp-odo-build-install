@@ -33,7 +33,7 @@
   
   **REMARK** : Next patch it to add the missing `builder` annotation
   ```bash
-  oc patch is/openjdk18 -n openshift -p '{"spec":{"$setElementOrder/tags":[{"name":"latest"}],"tags":[{"annotations":{"openshift.io/display-name":"OpenJDK 1.8","tags":"builder"},"name":"latest"}]}}ˀ
+  oc annotate istag/openjdk18:latest tags=builder -n openshift
   ```
   
 - Create an application which represents the microservices or components that we will install
