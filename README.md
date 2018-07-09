@@ -1,13 +1,12 @@
 # Instructions
 
-- Install odo using `brew`
+- [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
 
   ```bash
-  brew install odo
+  sudo curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.7/odo-darwin-amd64 -o /usr/local/bin/odo && chmod +x /usr/local/bin/odo
   ```
   
-- Alternative approach where we compile `odo`
-
+  **Remark** : Alternative approach is to compile the project if `go` is installed on your machine
   ```bash
   cd $GOPATH/src
   go get -u github.com/redhat-developer/odo/...
