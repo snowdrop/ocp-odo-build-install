@@ -33,11 +33,11 @@
   oc apply -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/openjdk18-image-stream.json -n openshift
   ```
 
- **Optional** : Add the OpenJDK-1.8 S2I Build Image as it is not installed by default on minishift - ocp 3.9
+  **Optional** : Add the OpenJDK-1.8 S2I Build Image as it is not installed by default on minishift - ocp 3.9
   ```bash
   oc create -f is-openjdk18.yaml
   ``` 
-
+  
 - Create new spring-boot-http component (= create a new application, DeploymentConfig, Service)
 
   ```bash
