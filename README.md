@@ -37,10 +37,10 @@
 - Create new spring-boot-http component (= create a new application, DeploymentConfig, Service)
 
   ```bash
-  odo create openjdk18 --git https://github.com/snowdrop/ocp-odo-build-install.git
+  odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
   **REMARK** : 
-  - Deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not defined to specify the uberjar file to be used !!
+  - Deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not defined to specify the uberjar file to be used. Then apply the following env var `oc env dc/openjdk18 ARTIFACT_COPY_ARGS=*-exec.jar`  
   
 - Cleanup
   ```bash
