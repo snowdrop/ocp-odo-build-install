@@ -11,7 +11,7 @@
   ```bash
   cd $GOPATH/src
   go get -u github.com/redhat-developer/odo/...
-  cd $GOPATH/src/github.com/redhat-developer/odo
+  cd github.com/redhat-developer/odo
   make install
   ```
 
