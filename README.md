@@ -39,9 +39,16 @@
   ```bash
   odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
-  **REMARK** : 
-  - Deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not defined to specify the uberjar file to be used. Then apply the following env var `oc env dc/openjdk18 ARTIFACT_COPY_ARGS=*-exec.jar`  
-  
+
+- **WARNING** : The deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the uberjar file to be used. Then apply the following env var oc command on the `BuildConfig` resource and restart the build:
+
+  ```
+  ctrl-c
+  oc cancel-build sb1-1
+  oc env bc/sb1 ARTIFACT_COPY_ARGS=*-exec.jar 
+  oc start-build sb1
+  ```
+
 - Cleanup
   ```bash
   oc delete all --all
