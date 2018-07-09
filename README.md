@@ -7,10 +7,10 @@
 
 ## Instructions
 
-- [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
+- [Install odo](https://github.com/redhat-developer/odo#installation) on Macos. Version tested is `0.0.7`
 
   ```bash
-  sudo sh -c 'curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.6/odo-darwin-amd64.gz | gzip -d > /usr/local/bin/odo; chmod +x /usr/local/bin/odo'
+  sudo curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.7/odo-darwin-amd64 -o /usr/local/bin/odo && chmod +x /usr/local/bin/odo
   ```
 
 - Next, git clone the following Spring Boot project
@@ -36,7 +36,12 @@
   oc patch is/openjdk18 -n openshift -p '{"spec":{"$setElementOrder/tags":[{"name":"latest"}],"tags":[{"annotations":{"openshift.io/display-name":"OpenJDK 1.8","tags":"builder"},"name":"latest"}]}}ˀ
   ```
   
-- Create a new SpringBoot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
+- Create an application which represents the microservices or components that we will install
+  ```bash
+  odo app create springbootapp
+  ```
+  
+- Create a new SpringBoot's odo component with our Github project
 
   ```bash
   odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
@@ -46,15 +51,14 @@
 
   ```
   ctrl-c
-  oc cancel-build sb1-1
-  oc env bc/sb1 ARTIFACT_COPY_ARGS=*-exec.jar 
-  oc start-build sb1
+  oc cancel-build sb1-springbootapp-1
+  oc env bc/sb1-springbootapp ARTIFACT_COPY_ARGS=*-exec.jar 
+  oc start-build sb1-springbootapp
   ```
 
 - Cleanup
   ```bash
   oc delete all --all
-  oc delete pvc/openjdk18-s2idata
   ```  
   
 **Steps**
