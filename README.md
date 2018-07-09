@@ -4,7 +4,7 @@
 
 - Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` due to a missing Red Hat CA Cert not installed locally and available for docker to pull images from Red Hat Registry server 
    ```bash
-   minishift start --iso-url https://github.com/minishift/minishift-centos-iso/releases/download/v1.9.0/minishift-centos7.iso\
+   minishift start --iso-url https://github.com/minishift/minishift-centos-iso/releases/download/v1.9.0/minishift-centos7.iso
    ```
 - `admin-user` addon installed.
 
