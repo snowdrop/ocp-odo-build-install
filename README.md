@@ -28,13 +28,8 @@
   oc login $(minishift ip):8443 -u admin -p admin
   oc new-project ocp-odo-build-install
   ```
-  
-- OpenJDK-1.8 S2I image can be installed using the minishift's `xpaas addon` and if you want to install the latest image which is `1.4.4`,   then use this command : 
-  ```bash
-  oc apply -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/openjdk18-image-stream.json -n openshift
-  ```
-
-  **Optional** : To install the the OpenJDK-1.8 S2I Build Image, as defined within this project, use this command : 
+ 
+- Install the OpenJDK-1.8 S2I Build Image, as defined within this project, using this command as it is not installed with the `community` image on ocp : 
   ```bash
   oc create -f is-openjdk18.yaml
   ``` 
@@ -61,4 +56,11 @@
 - The code is git cloned (or pushed), then the s2i script resposnible to do the mvn compilation will take place.
 - When the compilation is finished, then the script `assemble-and-restart` is called by the supervisord
 - The microservices is (re)started
+
+**Issue**
+
+- OpenJDK-1.8 S2I image can be installed using the minishift's `xpaas addon` and if you want to install the latest image which is `1.4.4`,   then use this command : 
+  ```bash
+  oc apply -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/openjdk18-image-stream.json -n openshift
+  ```
 
