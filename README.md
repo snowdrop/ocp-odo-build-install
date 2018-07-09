@@ -26,12 +26,14 @@
   oc new-project ocp-odo-build-install
   ```
  
-- Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command as it is not installed by default on ocp : 
+- Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command : 
   ```bash
-  oc create -f is-openjdk18.yaml
+  oc create -f is-all-openjdk18.yaml
   ```
   
-- Create a new springboot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
+  **REMARK** : If you try to install the official image using the command `oc import-image` then the annotation tag's builder needed by odo is removed !
+  
+- Create a new SpringBoot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
 
   ```bash
   odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git

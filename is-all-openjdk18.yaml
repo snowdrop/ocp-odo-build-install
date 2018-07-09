@@ -5,7 +5,7 @@ metadata:
     kubectl.kubernetes.io/last-applied-configuration: >
       {"apiVersion":"v1","kind":"ImageStream","labels":{"xpaas":"1.4.14"},"metadata":{"annotations":{"openshift.io/display-name":"Red
       Hat OpenJDK 8","openshift.io/provider-display-name":"Red Hat,
-      Inc.","version":"1.4.14"},"name":"redhat-openjdk18-openshift","namespace":"openshift"},"spec":{"tags":[{"annotations":{"description":"Build
+      Inc.","version":"1.4.14"},"name":"openjdk18","namespace":"openshift"},"spec":{"tags":[{"annotations":{"description":"Build
       and run Java applications using Maven and OpenJDK
       8.","iconClass":"icon-rh-openjdk","openshift.io/display-name":"Red Hat
       OpenJDK
@@ -32,11 +32,11 @@ metadata:
     version: 1.4.14
   creationTimestamp: '2018-07-09T10:25:37Z'
   generation: 2
-  name: redhat-openjdk18-openshift
+  name: openjdk18
   namespace: openshift
   resourceVersion: '5621'
   selfLink: >-
-    /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/redhat-openjdk18-openshift
+    /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/openjdk18
   uid: 6bbef0cc-8362-11e8-ab94-1e362a8edbc9
 spec:
   lookupPolicy:
@@ -128,7 +128,7 @@ spec:
       referencePolicy:
         type: Source
 status:
-  dockerImageRepository: '172.30.1.1:5000/openshift/redhat-openjdk18-openshift'
+  dockerImageRepository: '172.30.1.1:5000/openshift/openjdk18'
   tags:
     - items:
         - created: '2018-07-09T10:25:47Z'
