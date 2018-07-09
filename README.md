@@ -26,12 +26,15 @@
   oc new-project ocp-odo-build-install
   ```
  
-- Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command : 
+- Install the official Red Hat OpenJDK-1.8 S2I Build Image using this command : 
   ```bash
-  oc create -f is-openjdk18.yaml
+  oc import-image openjdk18 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm -n openshift
   ```
   
-  **REMARK** : If you try to install the official image using the command `oc import-image` then the annotation tag's builder needed by odo is removed !
+  **REMARK** : Next patch it to add the missing `builder` annotation
+  ```bash
+  oc patch is/openjdk18 -n openshift -p '{"spec":{"$setElementOrder/tags":[{"name":"latest"}],"tags":[{"annotations":{"openshift.io/display-name":"OpenJDK 1.8","tags":"builder"},"name":"latest"}]}}ˀ
+  ```
   
 - Create a new SpringBoot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
 
