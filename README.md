@@ -1,9 +1,18 @@
 # Instructions
 
-- Install odo
+- Install odo using `brew`
 
   ```bash
   brew install odo
+  ```
+  
+- Alternative approach where we compile `odo`
+
+  ```bash
+  cd $GOPATH/src
+  go get -u github.com/redhat-developer/odo/...
+  cd $GOPATH/src/github.com/redhat-developer/odo
+  make install
   ```
 
 - Git clone project
