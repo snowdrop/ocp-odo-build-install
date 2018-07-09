@@ -177,4 +177,4 @@ status:
           generation: 2
           image: >-
             sha256:db5772bbf5a133794547cb17a8b084cece457a070b64a7d7d6fd6bc904bd151e
-      tag: 'latest'
+      tag: latest
