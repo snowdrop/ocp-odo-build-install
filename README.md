@@ -1,46 +1,42 @@
 # Instructions
 
-**PREREQUISITE** : Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` and `admin-user` addon installed !
+**PREREQUISITES** : 
+  - Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` due to a missing Red Hat CA Cert not installed locally and available for docker to pull images from Red Hat Registry server 
+  - `admin-user` addon installed.
 
 - [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
 
   ```bash
   sudo sh -c 'curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.6/odo-darwin-amd64.gz | gzip -d > /usr/local/bin/odo; chmod +x /usr/local/bin/odo'
   ```
-  
-  **Remark** : Alternative approach is to compile the project if `go` is installed on your machine
-  ```bash
-  cd $GOPATH/src
-  go get -u github.com/redhat-developer/odo/...
-  cd github.com/redhat-developer/odo
-  make install
-  ```
 
-- Git clone project
+- Next, git clone the following Spring Boot project
   
   ```bash
   git clone https://github.com/snowdrop/ocp-odo-build-install.git && cd ocp-odo-build-install
   ```
 
-- Log on to OpenShift and create project
+- Log on to OpenShift and create a new project
 
   ```bash
   oc login $(minishift ip):8443 -u admin -p admin
   oc new-project ocp-odo-build-install
   ```
  
-- Install the OpenJDK-1.8 S2I Build Image, as defined within this project, using this command as it is not installed with the `community` image on ocp : 
+- Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command as it is not installed by default on ocp : 
   ```bash
   oc create -f is-openjdk18.yaml
   ``` 
+
+  **IMPORTANT**: 
   
-- Create new spring-boot-http component (= create a new application, DeploymentConfig, Service)
+- Create a new springboot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
 
   ```bash
   odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
   ```
 
-- **WARNING** : The deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the uberjar file to be used. Then apply the following env var oc command on the `BuildConfig` resource and restart the build:
+  **WARNING** : The deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the uberjar file to be used. Then apply the following env var oc command on the `BuildConfig` resource and restart the build:
 
   ```
   ctrl-c
