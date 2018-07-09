@@ -29,9 +29,7 @@
 - Install the official Red Hat OpenJDK-1.8 S2I Build Image using the following command as it is not installed by default on ocp : 
   ```bash
   oc create -f is-openjdk18.yaml
-  ``` 
-
-  **IMPORTANT**: 
+  ```
   
 - Create a new springboot's odo component which means, create a new application, buildConfig, DeploymentConfig & Service
 
@@ -65,7 +63,7 @@
 
 **Issue**
 
-- OpenJDK-1.8 S2I image can be installed using the minishift's `xpaas addon` and if you want to install the latest image which is `1.4.4`,   then use this command : 
+- OpenJDK-1.8 S2I image can be installed using the minishift's `xpaas addon` and if you want to install the latest image which is `1.4.4`, then use this command : 
   ```bash
   oc apply -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/openjdk18-image-stream.json -n openshift
   ```
