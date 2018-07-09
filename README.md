@@ -1,6 +1,6 @@
 # Instructions
 
-**PREREQUISITE** : Minishift `3.9` using Centos `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)`!
+**PREREQUISITE** : Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` and `admin-user` addon installed !
 
 - [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
 
