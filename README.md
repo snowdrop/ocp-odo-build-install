@@ -19,7 +19,12 @@
   oc new-project ocp-odo-build-install
   ```
   
-- Add the OpenJDK-1.8 S2I Build Image as it is not installed by default on minishift - ocp 3.9
+- OpenJDK-1.8 S2I image can be installed using the `xpaas addon` and if you want to install the latest image which is `1.4.4`, then use this command : 
+  ```bash
+  oc apply -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/openjdk18-image-stream.json -n openshift
+  ```
+
+- Optional : Add the OpenJDK-1.8 S2I Build Image as it is not installed by default on minishift - ocp 3.9
   ```bash
   oc create -f is-openjdk18.yaml
   ``` 
