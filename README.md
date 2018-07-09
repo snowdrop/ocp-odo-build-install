@@ -1,8 +1,11 @@
-# Instructions
+# Scenario to use odo and a Spring Boot application
 
-**PREREQUISITES** : 
-  - Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` due to a missing Red Hat CA Cert not installed locally and available for docker to pull images from Red Hat Registry server 
-  - `admin-user` addon installed.
+## PREREQUISITES 
+
+- Minishift `3.9` using Centos ISO `1.9.0` as we can't install image from red hat registry using latest centos distro `(> 1.9.0)` due to a missing Red Hat CA Cert not installed locally and available for docker to pull images from Red Hat Registry server 
+- `admin-user` addon installed.
+
+## Instructions
 
 - [Install odo](https://github.com/redhat-developer/odo#installation) on Macos
 
