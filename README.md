@@ -63,23 +63,23 @@
 	Commit:	ab5f0c21325c0bb7d7c5e187b7a9fc430c987f2d (Merge pull request #1 from mik-dass/test)
 	Author:	Tomas Kral <tomas.kral@gmail.com>
 	Date:	Mon Jun 4 15:22:37 2018 +0200
-+ set -eo pipefail
-+ PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/s2i
-+ HOME=/opt/app-root
-+ curl -s -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py 
-+ /usr/bin/python /tmp/get-pip.py --user
-The directory '/opt/app-root/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
-The directory '/opt/app-root/.cache/pip' or its parent directory is not owned by the current user and caching wheels has been disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
-Collecting pip
-Downloading https://files.pythonhosted.org/packages/5f/25/e52d3f31441505a5f3af41213346e5b6c221c9e086a166f3703d2ddaf940/pip-18.0-py2.py3-none-any.whl  (1.3MB)
-Collecting setuptools
-Downloading https://files.pythonhosted.org/packages/66/e8/570bb5ca88a8bcd2a1db9c6246bb66615750663ffaaeada95b04ffe74e12/setuptools-40.2.0-py2.py3-none-any.whl  (568kB)
-Collecting wheel
-Downloading https://files.pythonhosted.org/packages/81/30/e935244ca6165187ae8be876b6316ae201b71485538ffac1d718843025a9/wheel-0.31.1-py2.py3-none-any.whl  (41kB)
-Installing collected packages: pip, setuptools, wheel
-Could not install packages due to an EnvironmentError: [Errno 13] Permission denied: '/opt/app-root'
-Check the permissions.
-error: build error: non-zero (13) exit code from registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+  + set -eo pipefail
+  + PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/s2i
+  + HOME=/opt/app-root
+  + curl -s -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py 
+  + /usr/bin/python /tmp/get-pip.py --user
+  The directory '/opt/app-root/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been   disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+  The directory '/opt/app-root/.cache/pip' or its parent directory is not owned by the current user and caching wheels has been   disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+  Collecting pip
+  Downloading https://files.pythonhosted.org/packages/5f/25/e52d3f31441505a5f3af41213346e5b6c221c9e086a166f3703d2ddaf940/pip-  18.0-py2.py3-none-any.whl  (1.3MB)
+  Collecting setuptools
+  Downloading      https://files.pythonhosted.org/packages/66/e8/570bb5ca88a8bcd2a1db9c6246bb66615750663ffaaeada95b04ffe74e12/setuptools-40.2.0-py2.py3-none-any.whl  (568kB)
+  Collecting wheel
+  Downloading https://files.pythonhosted.org/packages/81/30/e935244ca6165187ae8be876b6316ae201b71485538ffac1d718843025a9/wheel-0.31.1-py2.py3-none-any.whl  (41kB)
+  Installing collected packages: pip, setuptools, wheel
+  Could not install packages due to an EnvironmentError: [Errno 13] Permission denied: '/opt/app-root'
+  Check the permissions.
+  error: build error: non-zero (13) exit code from registry.access.redhat.com/redhat-openjdk-18/openjdk18- openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
   ```
 
 - Cleanup
