@@ -36,6 +36,12 @@
   oc annotate istag/openjdk18:latest tags=builder -n openshift
   ```
   
+  OR alternatively, install the image using an imagestream within the openshift namespace. This imagestream contains the builder annotation that odo is looking for
+  to populate its catalog
+  ```bash
+  oc apply -f is-java-s2i.yml -n openshift
+  ```
+  
 - Create an application which represents the microservices or components that we will install
   ```bash
   odo app create springbootapp
