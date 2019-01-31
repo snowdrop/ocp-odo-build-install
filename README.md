@@ -147,7 +147,6 @@
    ✓   Deleting component sb1
    OK  Component sb1 from application springbootapp has been deleted
   ```   
-    
   
 - Cleanup
   ```bash
