@@ -115,23 +115,42 @@
   
 - Create a new component where we will upload the code from the local directory instead of using git binary build
   ```bash
-  odo create redhat-openjdk18-openshift:1.3 sb2 --local ./src
+  odo create redhat-openjdk18-openshift:1.3 sb2 --local ./
   ✓   Checking component
   ✓   Checking component version
   ✓   Creating component sb2
   OK  Component 'sb2' was created and ports 8778/TCP,8080/TCP,8443/TCP were opened
   OK  Component 'sb2' is now set as active component
   To push source code to the component run 'odo push'
+
+  OR
+  
+  odo create openjdk18:latest sb1 --binary ./target/ocp-odo-build-install-1.0-exec.jar
+  ✓   Checking component
+  ✓   Checking component version
+  ✓   Creating component sb1
+  ✓   Creating component sb1
+  OK  Component 'sb1' was created and ports 8080/TCP,8443/TCP,8778/TCP were opened
+  OK  Component 'sb1' is now set as active component
   ```  
   
 - Now push the code developed locally
   ```bash
   odo push
+  Pushing changes to component: sb1
+   ✓   Waiting for pod to start
+   ✓   Copying files to pod
+   ✓   Building component
+   OK  Changes successfully pushed to component: sb1
   ```
   
 - Access the service/endpoint 
   ```bash
-  TODO
+  odo url create --port 8080 sb1
+  Adding URL to component: sb1
+   OK  URL created for component: sb1
+  
+  sb1 - http://sb1-springbootapp-demo.192.168.99.50.nip.io
   ```  
   
 - Cleanup
