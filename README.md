@@ -48,6 +48,11 @@
   oc apply -f is-java-s2i.yml -n openshift
   ```
   
+- Compile and package the project locally
+  ```bash
+  mvn clean package
+  ```
+  
 - Create an application which represents the microservices or components that we will install
   ```bash
   odo app create springbootapp
@@ -66,7 +71,7 @@
   settings: {}
   ```
   
-- Check if our Java Builder image is well installed on Openshift
+- Check if our Java Builder image is well installed on OpenShift
   ```bash
   odo catalog list components
   NAME                           PROJECT       TAGS
