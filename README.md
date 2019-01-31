@@ -120,10 +120,10 @@
   
 - Create a new component where we will upload the code from the local directory instead of using git binary build
   ```bash
-  odo create redhat-openjdk18-openshift:1.3 sb2 --local ./
+  odo create java sb1
   ✓   Checking component
   ✓   Checking component version
-  ✓   Creating component sb2
+  ✓   Creating component sb1
   OK  Component 'sb2' was created and ports 8778/TCP,8080/TCP,8443/TCP were opened
   OK  Component 'sb2' is now set as active component
   To push source code to the component run 'odo push'
