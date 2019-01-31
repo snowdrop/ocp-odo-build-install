@@ -31,23 +31,12 @@
   oc login $(minishift ip):8443 -u admin -p admin
   oc new-project ocp-odo-build-install
   ```
+  
+- Use the Security Context Constraint 'restricted' to avoid this [issue](https://github.com/redhat-developer/odo/issues/1262)
+  ```bash
+  oc adm policy add-scc-to-user restricted -z default           
+  ```
  
-- Install the official Red Hat OpenJDK-1.8 S2I Build Image using this command : 
-  ```bash
-  oc import-image openjdk18 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm -n openshift
-  ```
-  
-  **REMARK** : Next patch it to add the missing `builder` annotation
-  ```bash
-  oc annotate istag/openjdk18:latest tags=builder -n openshift
-  ```
-  
-  OR alternatively, install the image using an imagestream within the openshift namespace. This imagestream contains the builder annotation that odo is looking for
-  to populate its catalog
-  ```bash
-  oc apply -f is-java-s2i.yml -n openshift
-  ```
-  
 - Compile and package the project locally
   ```bash
   mvn clean package
@@ -87,38 +76,8 @@
   ruby                           openshift     2.0,2.2,2.3,2.4,2.5,latest
   wildfly                        openshift     10.0,10.1,11.0,12.0,13.0,8.1,9.0,latest
   ```
-  
-- Create a new SpringBoot's odo `component` using this the Github project.
 
-  ```bash
-  odo create redhat-openjdk18-openshift:1.4 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
-  ✓   Checking component
-  ✓   Checking component version
-  ✓   Creating component sb1
-  ✓   Triggering build from git
-  OK  Component 'sb1' was created and ports 8080/TCP,8443/TCP,8778/TCP were opened
-  OK  Component 'sb1' is now set as active component
-  ```
-  
-  **Remark** : This command is creating a BuildConfig's file and will not at all use the `inner` loop but instead the `outerloop`
-
-  **WARNING** : The deployment of the pod will fail as an [ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the `uberjar` file to be used.
-  Then apply the following env var on the `BuildConfig` resource and restart the build:
-
-  ```
-  oc set env bc/sb1-springbootapp ARTIFACT_COPY_ARGS=*-exec.jar 
-  oc start-build sb1-springbootapp
-  ```
-
-- Let's delete the component
-  ```bash
-  odo delete sb1
-  Are you sure you want to delete sb1 from springbootapp? [y/N]: y
-   ✓   Deleting component sb1
-   OK  Component sb1 from application springbootapp has been deleted
-  ```   
-  
-- Create a new component where we will upload the code from the local directory instead of using git binary build
+- A. Create a Spring Boot 1 `=sb1` component where we will upload the code from the local directory.
   ```bash
   odo create java sb1
   ✓   Checking component
@@ -156,12 +115,64 @@
    OK  URL created for component: sb1
   
   sb1 - http://sb1-springbootapp-demo.192.168.99.50.nip.io
-  ```  
+  ```
+  
+- B. Create a new SpringBoot's `component` using this the Github project.
+
+  ```bash
+  odo delete sb1
+  odo create redhat-openjdk18-openshift:1.4 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
+  ✓   Checking component
+  ✓   Checking component version
+  ✓   Creating component sb1
+  ✓   Triggering build from git
+  OK  Component 'sb1' was created and ports 8080/TCP,8443/TCP,8778/TCP were opened
+  OK  Component 'sb1' is now set as active component
+  ```
+  
+  **Remark** : This command is creating a BuildConfig's file and will not at all use the `inner` loop but instead the `outerloop`
+
+  **WARNING** : The deployment of the pod will fail as an [ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the `uberjar` file to be used.
+  Then apply the following env var on the `BuildConfig` resource and restart the build:
+
+  ```
+  oc set env bc/sb1-springbootapp ARTIFACT_COPY_ARGS=*-exec.jar 
+  oc start-build sb1-springbootapp
+  ```
+
+- Let's delete the component
+  ```bash
+  odo delete sb1
+  Are you sure you want to delete sb1 from springbootapp? [y/N]: y
+   ✓   Deleting component sb1
+   OK  Component sb1 from application springbootapp has been deleted
+  ```   
+    
   
 - Cleanup
   ```bash
   oc delete all --all
-  ```    
+  ```   
+  
+## Issues
+  
+- If the Java s2i image is not there, install the `Red Hat OpenJDK-1.8 S2I Build Image using this command : 
+  ```bash
+  oc import-image openjdk18 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm -n openshift
+  ```
+  
+  **REMARK** : Next patch it to add the missing `builder` annotation
+  ```bash
+  oc annotate istag/openjdk18:latest tags=builder -n openshift
+  ```
+  
+  OR alternatively, install the image using an imagestream within the openshift namespace. This imagestream contains the builder annotation that odo is looking for
+  to populate its catalog
+  
+  ```bash
+  oc apply -f is-java-s2i.yml -n openshift
+  ```
+     
   
 **Steps**
  
