@@ -130,7 +130,7 @@
 
   OR
   
-  odo create openjdk18:latest sb1 --binary ./target/ocp-odo-build-install-1.0-exec.jar
+  odo create openjdk18:latest sb1 --binary ./target/ocp-odo-build-install-1.0.jar
   ✓   Checking component
   ✓   Checking component version
   ✓   Creating component sb1
