@@ -51,53 +51,93 @@
 - Create an application which represents the microservices or components that we will install
   ```bash
   odo app create springbootapp
+  Creating application: springbootapp in project: demo
+  Switched to application: springbootapp in project: demo
   ```
   
-- Create a new SpringBoot's odo component with the Github project. Maven build will take place
+  during this step, odo is creating a config file
+  ```bash
+  cat ~/.kube/odo             
+  activeApplications:
+  - active: true
+    activeComponent: ""
+    name: springbootapp
+    project: demo
+  settings: {}
+  ```
+  
+- Check if our Java Builder image is well installed on Openshift
+  ```bash
+  odo catalog list components
+  NAME                           PROJECT       TAGS
+  dotnet                         openshift     2.0,latest
+  httpd                          openshift     2.4,latest
+  java                           openshift     8,latest
+  nginx                          openshift     1.10,1.12,1.8,latest
+  nodejs                         openshift     0.10,10,4,6,8,8-RHOAR,latest
+  perl                           openshift     5.16,5.20,5.24,5.26,latest
+  php                            openshift     5.5,5.6,7.0,7.1,latest
+  python                         openshift     2.7,3.3,3.4,3.5,3.6,latest
+  redhat-openjdk18-openshift     openshift     1.0,1.1,1.2,1.3,1.4
+  ruby                           openshift     2.0,2.2,2.3,2.4,2.5,latest
+  wildfly                        openshift     10.0,10.1,11.0,12.0,13.0,8.1,9.0,latest
+  ```
+  
+- Create a new SpringBoot's odo `component` using this the Github project.
 
   ```bash
-  odo create openjdk18 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
+  odo create redhat-openjdk18-openshift:1.4 sb1 --git https://github.com/snowdrop/ocp-odo-build-install.git
+  ✓   Checking component
+  ✓   Checking component version
+  ✓   Creating component sb1
+  ✓   Triggering build from git
+  OK  Component 'sb1' was created and ports 8080/TCP,8443/TCP,8778/TCP were opened
+  OK  Component 'sb1' is now set as active component
   ```
+  
+  **Remark** : This command is creating a BuildConfig's file and will not at all use the `inner` loop but instead the `outerloop`
 
-  **WARNING** : The deployment of the pod will fail as a [missing ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the uberjar file to be used. Then apply the following env var oc command on the `BuildConfig` resource and restart the build:
+  **WARNING** : The deployment of the pod will fail as an [ENV var](https://github.com/redhat-developer/odo/issues/501) is not declared to specify the `uberjar` file to be used.
+  Then apply the following env var on the `BuildConfig` resource and restart the build:
 
   ```
-  ctrl-c
-  oc cancel-build sb1-springbootapp-1
-  oc env bc/sb1-springbootapp ARTIFACT_COPY_ARGS=*-exec.jar 
+  oc set env bc/sb1-springbootapp ARTIFACT_COPY_ARGS=*-exec.jar 
   oc start-build sb1-springbootapp
   ```
-  
-  **IMPORTANT** : If you try to upload the source using this command `odo create openjdk18 sb1 --local ./src`, then the supervisord's sidecar will not work
-  
-  ```
-  Cloning "https://github.com/kadel/bootstrap-supervisored-s2i " ...
-	Commit:	ab5f0c21325c0bb7d7c5e187b7a9fc430c987f2d (Merge pull request #1 from mik-dass/test)
-	Author:	Tomas Kral <tomas.kral@gmail.com>
-	Date:	Mon Jun 4 15:22:37 2018 +0200
-  + set -eo pipefail
-  + PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/s2i
-  + HOME=/opt/app-root
-  + curl -s -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py 
-  + /usr/bin/python /tmp/get-pip.py --user
-  The directory '/opt/app-root/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been   disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
-  The directory '/opt/app-root/.cache/pip' or its parent directory is not owned by the current user and caching wheels has been   disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
-  Collecting pip
-  Downloading https://files.pythonhosted.org/packages/5f/25/e52d3f31441505a5f3af41213346e5b6c221c9e086a166f3703d2ddaf940/pip-  18.0-py2.py3-none-any.whl  (1.3MB)
-  Collecting setuptools
-  Downloading      https://files.pythonhosted.org/packages/66/e8/570bb5ca88a8bcd2a1db9c6246bb66615750663ffaaeada95b04ffe74e12/setuptools-40.2.0-py2.py3-none-any.whl  (568kB)
-  Collecting wheel
-  Downloading https://files.pythonhosted.org/packages/81/30/e935244ca6165187ae8be876b6316ae201b71485538ffac1d718843025a9/wheel-0.31.1-py2.py3-none-any.whl  (41kB)
-  Installing collected packages: pip, setuptools, wheel
-  Could not install packages due to an EnvironmentError: [Errno 13] Permission denied: '/opt/app-root'
-  Check the permissions.
-  error: build error: non-zero (13) exit code from registry.access.redhat.com/redhat-openjdk-18/openjdk18- openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
-  ```
 
+- Let's delete the component
+  ```bash
+  odo delete sb1
+  Are you sure you want to delete sb1 from springbootapp? [y/N]: y
+   ✓   Deleting component sb1
+   OK  Component sb1 from application springbootapp has been deleted
+  ```   
+  
+- Create a new component where we will upload the code from the local directory instead of using git binary build
+  ```bash
+  odo create redhat-openjdk18-openshift:1.3 sb2 --local ./src
+  ✓   Checking component
+  ✓   Checking component version
+  ✓   Creating component sb2
+  OK  Component 'sb2' was created and ports 8778/TCP,8080/TCP,8443/TCP were opened
+  OK  Component 'sb2' is now set as active component
+  To push source code to the component run 'odo push'
+  ```  
+  
+- Now push the code developed locally
+  ```bash
+  odo push
+  ```
+  
+- Access the service/endpoint 
+  ```bash
+  TODO
+  ```  
+  
 - Cleanup
   ```bash
   oc delete all --all
-  ```  
+  ```    
   
 **Steps**
  
