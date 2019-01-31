@@ -7,10 +7,16 @@
 
 ## Instructions
 
-- [Install odo](https://github.com/redhat-developer/odo#installation) on Macos. Version tested is `0.0.9`
+- [Install odo](https://github.com/redhat-developer/odo#installation) on Macos. Version tested is `0.0.18`
 
   ```bash
-  sudo curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.9/odo-darwin-amd64 -o /usr/local/bin/odo && chmod +x /usr/local/bin/odo
+  sudo curl -L https://github.com/redhat-developer/odo/releases/download/v0.0.18/odo-darwin-amd64 -o /usr/local/bin/odo && chmod +x /usr/local/bin/odo
+  ```
+  
+  or using brew tool
+  ```bash
+  brew tap kadel/odo
+  brew install kadel/odo/odo
   ```
 
 - Next, git clone the following Spring Boot project
